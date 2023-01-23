@@ -35,7 +35,7 @@ const TaskItem = ({ task }: Props) => {
     };
 
     return (
-        <div className="flex justify-between">
+        <div className="my-1 flex justify-between py-2">
             <AreYouSureModal
                 isOpenModal={openAreYouSureModal}
                 deleteTask={deleteTask}

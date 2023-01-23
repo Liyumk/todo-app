@@ -1,6 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { Input } from "@material-tailwind/react";
+import { Dispatch, SetStateAction } from "react";
 
 type Props = {
     addTask?: () => void;
@@ -8,6 +9,10 @@ type Props = {
     closeModal: () => void;
     edit?: boolean;
     editTask?: (id: string) => void;
+    setNewTaskTitle: Dispatch<SetStateAction<string>>;
+    value: string;
+    error: boolean;
+    setError: Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AddNewTaskModal = ({
@@ -16,6 +21,10 @@ const AddNewTaskModal = ({
     edit,
     editTask = () => null,
     addTask = () => null,
+    setNewTaskTitle,
+    value,
+    error,
+    setError,
 }: Props) => {
     return (
         <>
@@ -53,7 +62,25 @@ const AddNewTaskModal = ({
                                         }
                                         size="lg"
                                         color="purple"
+                                        value={value}
+                                        onChange={(e) => {
+                                            setError(false);
+                                            setNewTaskTitle(e.target.value);
+                                        }}
+                                        error={error}
+                                        onKeyPress={(event) => {
+                                            if (event.key === "Enter") {
+                                                addTask();
+                                            }
+                                        }}
                                     />
+                                    <div className="mt-3 ml-1">
+                                        <p className="text-sm text-red-400">
+                                            {error
+                                                ? "Please enter a task."
+                                                : null}
+                                        </p>
+                                    </div>
                                     <div className="mt-5 flex justify-end gap-x-4 ">
                                         <button
                                             type="button"
