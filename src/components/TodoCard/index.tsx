@@ -56,7 +56,7 @@ const TodoCard = () => {
             </div>
 
             <div className="mt-5 rounded px-4 py-4 shadow-md shadow-purple-50 sm:px-16">
-                <div>
+                <div className="flex flex-col flex-col-reverse">
                     {Tasks.map((task) => (
                         <TaskItem
                             key={task.id}
