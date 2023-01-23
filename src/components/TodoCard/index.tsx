@@ -13,7 +13,6 @@ const TodoCard = () => {
     const [updateTasksList, setUpdateTasksList] = useState(false);
 
     const addTask = () => {
-        // Add task here
         if (newTaskTitle.length > 0) {
             setInputError(false);
             const newTask: Task = {
@@ -33,7 +32,7 @@ const TodoCard = () => {
     };
 
     return (
-        <div className="mx-2 my-14 w-[40rem] pb-10 sm:mx-0">
+        <div className="mx-2 my-14 h-fit w-[40rem] pb-10 sm:mx-0">
             <AddNewTaskModal
                 addTask={addTask}
                 closeModal={closeModal}

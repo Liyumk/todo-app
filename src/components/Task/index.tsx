@@ -4,7 +4,6 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import AreYouSureModal from "../AreYouSureModal";
 import EditTaskModal from "../AddNewTaskModal";
 import { Task } from "../../utils/types";
-import { idForNewTask } from "../../utils/commonFuncs";
 import Tasks from "../../api/tasks.json";
 
 type Props = {
@@ -13,7 +12,6 @@ type Props = {
 };
 
 const TaskItem = ({ task, setUpdateTasksList }: Props) => {
-    // const [completed, setCompleted] = useState(false);
     const [openAreYouSureModal, setOpenAreYouSureModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
     const [inputError, setInputError] = useState(false);
@@ -21,7 +19,6 @@ const TaskItem = ({ task, setUpdateTasksList }: Props) => {
     const taskId = task.id;
 
     const deleteTask = () => {
-        // Delete todo here
         const indexOfTask = Tasks.findIndex((task) => task.id === taskId);
         Tasks.splice(indexOfTask, 1);
         setOpenAreYouSureModal(false);
@@ -29,16 +26,20 @@ const TaskItem = ({ task, setUpdateTasksList }: Props) => {
     };
 
     const editTask = () => {
-        // Edit here
         if (taskToBeEdited.length > 0) {
             const indexOfTask = Tasks.findIndex((task) => task.id === taskId);
             Tasks[indexOfTask].title = taskToBeEdited;
             setOpenEditModal(false);
             setUpdateTasksList((prev) => !prev);
-            // setTaskToBeEdited("");
         } else {
             setInputError(true);
         }
+    };
+
+    const completedTask = () => {
+        const indexOfTask = Tasks.findIndex((task) => task.id === taskId);
+        Tasks[indexOfTask].completed = !Tasks[indexOfTask].completed;
+        setUpdateTasksList((prev) => !prev);
     };
 
     const closeEditModal = () => {
@@ -47,13 +48,6 @@ const TaskItem = ({ task, setUpdateTasksList }: Props) => {
 
     const closeAreYouSureModal = () => {
         setOpenAreYouSureModal(false);
-    };
-
-    const completed = () => {
-        // completed here
-        const indexOfTask = Tasks.findIndex((task) => task.id === taskId);
-        Tasks[indexOfTask].completed = !Tasks[indexOfTask].completed;
-        setUpdateTasksList((prev) => !prev);
     };
 
     return (
@@ -77,7 +71,7 @@ const TaskItem = ({ task, setUpdateTasksList }: Props) => {
             <div className="flex w-full justify-start gap-x-4">
                 <div
                     className="flex items-center hover:cursor-pointer"
-                    onClick={completed}
+                    onClick={completedTask}
                 >
                     {task.completed ? (
                         <BiRadioCircleMarked
