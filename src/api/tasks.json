@@ -13,40 +13,5 @@
         "id": 3,
         "title": "Buy groceries",
         "completed": false
-    },
-    {
-        "id": 4,
-        "title": "Mow the lawn",
-        "completed": true
-    },
-    {
-        "id": 5,
-        "title": "Wash the dishes",
-        "completed": false
-    },
-    {
-        "id": 6,
-        "title": "Clean the bathroom",
-        "completed": true
-    },
-    {
-        "id": 7,
-        "title": "Vacuum the living room",
-        "completed": false
-    },
-    {
-        "id": 8,
-        "title": "Do homework",
-        "completed": true
-    },
-    {
-        "id": 9,
-        "title": "Pay bills",
-        "completed": false
-    },
-    {
-        "id": 10,
-        "title": "Call Mom",
-        "completed": false
     }
 ]
