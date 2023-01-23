@@ -18,18 +18,21 @@ const TaskItem = ({ task, setUpdateTasksList }: Props) => {
     const [openEditModal, setOpenEditModal] = useState(false);
     const [inputError, setInputError] = useState(false);
     const [taskToBeEdited, setTaskToBeEdited] = useState(task.title);
+    const taskId = task.id;
 
     const deleteTask = () => {
         // Delete todo here
+        const indexOfTask = Tasks.findIndex((task) => task.id === taskId);
+        Tasks.splice(indexOfTask, 1);
+        setOpenAreYouSureModal(false);
+        setUpdateTasksList((prev) => !prev);
     };
 
     const editTask = () => {
         // Edit here
         if (taskToBeEdited.length > 0) {
-            const taskId = task.id;
             const indexOfTask = Tasks.findIndex((task) => task.id === taskId);
             Tasks[indexOfTask].title = taskToBeEdited;
-            console.log(Tasks[indexOfTask]);
             setOpenEditModal(false);
             setUpdateTasksList((prev) => !prev);
             // setTaskToBeEdited("");
@@ -48,6 +51,9 @@ const TaskItem = ({ task, setUpdateTasksList }: Props) => {
 
     const completed = () => {
         // completed here
+        const indexOfTask = Tasks.findIndex((task) => task.id === taskId);
+        Tasks[indexOfTask].completed = !Tasks[indexOfTask].completed;
+        setUpdateTasksList((prev) => !prev);
     };
 
     return (
@@ -68,7 +74,7 @@ const TaskItem = ({ task, setUpdateTasksList }: Props) => {
                 setValue={setTaskToBeEdited}
                 task={task}
             />
-            <div className="flex flex-1 justify-start gap-x-4 ">
+            <div className="flex w-full justify-start gap-x-4">
                 <div
                     className="flex items-center hover:cursor-pointer"
                     onClick={completed}
@@ -91,13 +97,15 @@ const TaskItem = ({ task, setUpdateTasksList }: Props) => {
                 </p>
             </div>
             <div className="flex flex-1 items-center justify-end gap-x-5">
-                <AiOutlineEdit
-                    className="text-blue-400 hover:cursor-pointer hover:text-blue-500"
-                    size={20}
-                    onClick={() => {
-                        setOpenEditModal(true);
-                    }}
-                />
+                {!task.completed && (
+                    <AiOutlineEdit
+                        className="text-blue-400 hover:cursor-pointer hover:text-blue-500"
+                        size={20}
+                        onClick={() => {
+                            setOpenEditModal(true);
+                        }}
+                    />
+                )}
                 <AiOutlineDelete
                     className="text-red-400 hover:cursor-pointer hover:text-red-500"
                     size={20}
