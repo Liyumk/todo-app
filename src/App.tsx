@@ -1,13 +1,13 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
+import { BrowserRouter } from "react-router-dom";
+import MainRoute from "./routes/MainRoute";
 
 function App() {
-    const [count, setCount] = useState(0);
-
     return (
-        <h1 className="text-3xl font-bold underline text-red-100">
-            Hello world!
-        </h1>
+        <BrowserRouter>
+            <MainRoute />
+        </BrowserRouter>
     );
 }
 
