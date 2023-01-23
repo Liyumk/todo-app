@@ -4,17 +4,13 @@ import AddNewTaskModal from "../AddNewTaskModal";
 import TaskItem from "../Task";
 import Tasks from "../../api/tasks.json";
 import { Task } from "../../utils/types";
+import { idForNewTask } from "../../utils/commonFuncs";
 
 const TodoCard = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [openAddNewModal, setAddNewModal] = useState(false);
     const [newTaskTitle, setNewTaskTitle] = useState<string>("");
     const [inputError, setInputError] = useState(false);
-
-    const idForNewTask = () => {
-        const length = Tasks.length;
-        const lastTask = Tasks[length - 1];
-        return lastTask.id + 1;
-    };
+    const [updateTasksList, setUpdateTasksList] = useState(false);
 
     const addTask = () => {
         // Add task here
@@ -33,7 +29,7 @@ const TodoCard = () => {
     };
 
     const closeModal = () => {
-        setIsOpen(false);
+        setAddNewModal(false);
     };
 
     return (
@@ -41,8 +37,8 @@ const TodoCard = () => {
             <AddNewTaskModal
                 addTask={addTask}
                 closeModal={closeModal}
-                isOpen={isOpen}
-                setNewTaskTitle={setNewTaskTitle}
+                isOpen={openAddNewModal}
+                setValue={setNewTaskTitle}
                 value={newTaskTitle}
                 error={inputError}
                 setError={setInputError}
@@ -54,7 +50,7 @@ const TodoCard = () => {
                         size={25}
                         className="hover:cursor-pointer"
                         onClick={() => {
-                            setIsOpen(true);
+                            setAddNewModal(true);
                         }}
                     />
                 </div>
@@ -70,6 +66,7 @@ const TodoCard = () => {
                                 title: task.title,
                                 completed: task.completed,
                             }}
+                            setUpdateTasksList={setUpdateTasksList}
                         />
                     ))}
                 </div>

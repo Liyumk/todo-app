@@ -2,17 +2,19 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { Input } from "@material-tailwind/react";
 import { Dispatch, SetStateAction } from "react";
+import { Task } from "../../utils/types";
 
 type Props = {
     addTask?: () => void;
     isOpen: boolean;
     closeModal: () => void;
     edit?: boolean;
-    editTask?: (id: string) => void;
-    setNewTaskTitle: Dispatch<SetStateAction<string>>;
+    editTask?: (id?: number) => void;
+    setValue: Dispatch<SetStateAction<string>>;
     value: string;
     error: boolean;
     setError: Dispatch<React.SetStateAction<boolean>>;
+    task?: Task;
 };
 
 const AddNewTaskModal = ({
@@ -21,10 +23,11 @@ const AddNewTaskModal = ({
     edit,
     editTask = () => null,
     addTask = () => null,
-    setNewTaskTitle,
+    setValue,
     value,
     error,
     setError,
+    task,
 }: Props) => {
     return (
         <>
@@ -65,19 +68,23 @@ const AddNewTaskModal = ({
                                         value={value}
                                         onChange={(e) => {
                                             setError(false);
-                                            setNewTaskTitle(e.target.value);
+                                            setValue(e.target.value);
                                         }}
                                         error={error}
                                         onKeyPress={(event) => {
                                             if (event.key === "Enter") {
-                                                addTask();
+                                                edit
+                                                    ? editTask(task?.id)
+                                                    : addTask();
                                             }
                                         }}
                                     />
                                     <div className="mt-3 ml-1">
                                         <p className="text-sm text-red-400">
-                                            {error
+                                            {error && !edit
                                                 ? "Please enter a task."
+                                                : error && edit
+                                                ? "Task title can not be empty."
                                                 : null}
                                         </p>
                                     </div>
@@ -87,7 +94,7 @@ const AddNewTaskModal = ({
                                             className="hover:bg-white-300 hover:text-white-400 inline-flex w-20 justify-center rounded-md border border-transparent bg-green-400 px-4 py-2 text-sm font-medium text-white hover:bg-green-500 focus:outline-none"
                                             onClick={() => {
                                                 edit
-                                                    ? editTask("id")
+                                                    ? editTask(task?.id)
                                                     : addTask();
                                             }}
                                         >
